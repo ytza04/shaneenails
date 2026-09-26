@@ -12,14 +12,14 @@ function crearMailer() {
     $mail = new PHPMailer(true);
 
     $mail->isSMTP();
-    $mail->Host       = $_ENV['MAIL_HOST'];
+    $mail->Host       = env('MAIL_HOST');
     $mail->SMTPAuth   = true;
-    $mail->Username   = $_ENV['MAIL_USUARIO'];
-    $mail->Password   = $_ENV['MAIL_CLAVE'];
+    $mail->Username   = env('MAIL_USUARIO');
+    $mail->Password   = env('MAIL_CLAVE');
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port       = $_ENV['MAIL_PORT'];
+    $mail->Port       = env('MAIL_PORT');
     $mail->CharSet    = 'UTF-8';
-    $mail->setFrom($_ENV['MAIL_USUARIO'], $_ENV['MAIL_NOMBRE']);
+    $mail->setFrom(env('MAIL_USUARIO'), env('MAIL_NOMBRE'));
 
     return $mail;
 }
@@ -32,7 +32,7 @@ function emailCitaAgendada($email_cliente, $nombre_cliente, $datos_cita) {
     try {
         $mail = crearMailer();
         $mail->addAddress($email_cliente, $nombre_cliente);
-        $mail->addAddress($_ENV['MAIL_USUARIO'], $_ENV['MAIL_NOMBRE']);
+        $mail->addAddress(env('MAIL_USUARIO'), env('MAIL_NOMBRE'));
 
         $mail->isHTML(true);
         $mail->Subject = 'Tu cita en ShaneeNails fue recibida';
@@ -63,7 +63,7 @@ function emailCitaAgendada($email_cliente, $nombre_cliente, $datos_cita) {
                     </div>
 
                     <p>Puedes revisar el estado de tu cita en tu portal.</p>
-                    <a href='" . $_ENV['SITE_URL'] . "/cliente/dashboard.php'
+                    <a href='" . env('SITE_URL') . "/cliente/dashboard.php'
                        style='display: inline-block; background-color: #C9A96E; 
                               color: white; padding: 0.8rem 2rem; border-radius: 50px;
                               text-decoration: none; font-size: 0.9rem;'>
@@ -119,7 +119,7 @@ function emailCotizacionEnviada($email_cliente, $nombre_cliente, $precio, $mensa
                     </div>
 
                     <p>Entra a tu portal para aceptar o rechazar la cotización.</p>
-                    <a href='" . $_ENV['SITE_URL'] . "/cliente/dashboard.php'
+                    <a href='" . env('SITE_URL') . "/cliente/dashboard.php'
                        style='display: inline-block; background-color: #C9A96E;
                               color: white; padding: 0.8rem 2rem; border-radius: 50px;
                               text-decoration: none; font-size: 0.9rem;'>
@@ -148,7 +148,7 @@ function emailCitaConfirmada($email_cliente, $nombre_cliente, $datos_cita) {
     try {
         $mail = crearMailer();
         $mail->addAddress($email_cliente, $nombre_cliente);
-        $mail->addAddress($_ENV['MAIL_USUARIO'], $_ENV['MAIL_NOMBRE']);
+        $mail->addAddress(env('MAIL_USUARIO'), env('MAIL_NOMBRE'));
 
         $mail->isHTML(true);
         $mail->Subject = 'Cita confirmada en ShaneeNails';
