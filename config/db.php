@@ -1,6 +1,9 @@
 <?php
 function conectar() {
-    $dsn = "mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_NAME']};charset=utf8mb4";
+    $dbHost = env('DB_HOST');
+    $dbName = env('DB_NAME');
+
+    $dsn = "mysql:host={$dbHost};dbname={$dbName};charset=utf8mb4";
 
     $opciones = [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
@@ -9,7 +12,7 @@ function conectar() {
     ];
 
     try {
-        return new PDO($dsn, $_ENV['DB_USER'], $_ENV['DB_PASS'], $opciones);
+        return new PDO($dsn, env('DB_USER'), env('DB_PASS'), $opciones);
     } catch (PDOException $e) {
         die("Error de conexión: " . $e->getMessage());
     }
